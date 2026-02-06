@@ -9,11 +9,13 @@ import { useBoolean } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 
-import { paths } from 'src/routes/paths';
 import { usePathname } from 'src/routes/hooks';
+import { RouterLink } from 'src/routes/components';
+import { paths } from 'src/routes/paths';
 
+import { Iconify } from 'src/components/iconify';
 import { Logo } from 'src/components/logo';
 
 import { NavMobile } from './nav/mobile';
@@ -21,8 +23,6 @@ import { NavDesktop } from './nav/desktop';
 import { Footer, HomeFooter } from './footer';
 import { MenuButton } from '../components/menu-button';
 import { navData as mainNavData } from '../nav-config-main';
-import { SignInButton } from '../components/sign-in-button';
-import { SettingsButton } from '../components/settings-button';
 import { MainSection, LayoutSection, HeaderSection } from '../core';
 
 // ----------------------------------------------------------------------
@@ -76,41 +76,29 @@ export function MainLayout({
           />
           <NavMobile data={navData} open={open} onClose={onClose} />
 
-          {/** @slot Logo */}
-          <Logo />
-        </>
-      ),
-      rightArea: (
-        <>
           {/** @slot Nav desktop */}
           <NavDesktop
             data={navData}
             sx={(theme) => ({
               display: 'none',
-              [theme.breakpoints.up(layoutQuery)]: { mr: 2.5, display: 'flex' },
+              [theme.breakpoints.up(layoutQuery)]: { display: 'flex' },
             })}
           />
-
+        </>
+      ),
+      centerArea: <Logo />,
+      rightArea: (
+        <>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 1.5 } }}>
-            {/** @slot Settings button */}
-            <SettingsButton />
-
-            {/** @slot Sign in button */}
-            <SignInButton />
-
-            {/** @slot Purchase button */}
-            <Button
-              variant="contained"
-              rel="noopener noreferrer"
-              target="_blank"
-              href={paths.minimalStore}
-              sx={(theme) => ({
-                display: 'none',
-                [theme.breakpoints.up(layoutQuery)]: { display: 'inline-flex' },
-              })}
-            >
-              Purchase
-            </Button>
+            <IconButton component={RouterLink} href={paths.auth.jwt.signIn}>
+              <Iconify icon="solar:user-circle-bold" />
+            </IconButton>
+            <IconButton component={RouterLink} href={paths.product.root}>
+              <Iconify icon="solar:rounded-magnifer-bold" />
+            </IconButton>
+            <IconButton component={RouterLink} href={paths.product.checkout}>
+              <Iconify icon="solar:bag-3-bold" />
+            </IconButton>
           </Box>
         </>
       ),
