@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
 
+import { redirect } from 'next/navigation';
+
 import { CONFIG } from 'src/global-config';
 
-import { UserProfileView } from 'src/sections/user/view';
+import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
-export const metadata: Metadata = { title: `User profile | Dashboard - ${CONFIG.appName}` };
+export const metadata: Metadata = { title: `User account | Dashboard - ${CONFIG.appName}` };
 
 export default function Page() {
-  return <UserProfileView />;
+  redirect(paths.dashboard.user.account);
 }

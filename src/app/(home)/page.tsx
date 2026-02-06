@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
 
-import { HomeView } from 'src/sections/home/view';
+import { CONFIG } from 'src/global-config';
+import { getProducts } from 'src/actions/product-ssr';
+
+import { ProductShopView } from 'src/sections/product/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata: Metadata = {
-  title: 'Minimals UI: The starting point for your next project',
-  description:
-    'The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style',
-};
+export const metadata: Metadata = { title: `Home - ${CONFIG.appName}` };
 
-export default function Page() {
-  return <HomeView />;
+export default async function Page() {
+  const { products } = await getProducts();
+
+  return <ProductShopView products={products} />;
 }
